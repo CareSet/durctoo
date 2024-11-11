@@ -1,0 +1,181 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "HTML5 Form Schema",
+  "description": "JSON Schema for validating HTML5 form representations in the durctoo package",
+  "type": "object",
+  "required": ["form"],
+  "properties": {
+    "form": {
+      "type": "object",
+      "required": ["form_header", "form_element_list"],
+      "properties": {
+        "form_header": {
+          "type": "object",
+          "required": ["form_id", "method", "action"],
+          "properties": {
+            "form_id": {
+              "type": "string",
+              "description": "Unique identifier for the form"
+            },
+            "method": {
+              "type": "string",
+              "enum": ["GET", "POST"],
+              "description": "HTTP method for form submission"
+            },
+            "action": {
+              "type": "string",
+              "description": "URL where the form data will be submitted"
+            },
+            "enctype": {
+              "type": "string",
+              "description": "Form data encoding type"
+            }
+          }
+        },
+        "form_element_list": {
+          "type": "array",
+          "description": "Array of form input elements",
+          "items": {
+            "type": "object",
+            "required": ["type", "name"],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["input", "select", "textarea", "checkbox_group", "radio_group", "datalist"],
+                "description": "Type of form element"
+              },
+              "input_type": {
+                "type": "string",
+                "enum": [
+                  "text",
+                  "password",
+                  "email",
+                  "number",
+                  "date",
+                  "tel",
+                  "checkbox",
+                  "radio"
+                ],
+                "description": "Type of input element (for type='input')"
+              },
+              "name": {
+                "type": "string",
+                "description": "Name attribute of the form element"
+              },
+              "label": {
+                "type": "string",
+                "description": "Label text for the form element"
+              },
+              "required": {
+                "type": "boolean",
+                "description": "Whether the input is required"
+              },
+              "placeholder": {
+                "type": "string",
+                "description": "Placeholder text for text-based inputs"
+              },
+              "value": {
+                "type": "string",
+                "description": "Current value of the form element"
+              },
+              "min_length": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Minimum length for text input"
+              },
+              "max_length": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Maximum length for text input"
+              },
+              "pattern": {
+                "type": "string",
+                "description": "Regular expression pattern for input validation"
+              },
+              "options": {
+                "type": "array",
+                "description": "Options for select, radio_group, checkbox_group, or datalist",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "object",
+                      "required": ["value", "label"],
+                      "properties": {
+                        "value": {
+                          "type": "string",
+                          "description": "Value attribute of the option"
+                        },
+                        "label": {
+                          "type": "string",
+                          "description": "Display text for the option"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "min_select": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Minimum number of selections required for checkbox groups"
+              },
+              "max_select": {
+                "type": ["integer", "null"],
+                "minimum": 0,
+                "description": "Maximum number of selections allowed for checkbox groups"
+              },
+              "default_value": {
+                "type": ["string", "number", "boolean"],
+                "description": "Default value for the input"
+              },
+              "multiple": {
+                "type": "boolean",
+                "description": "Whether multiple selections are allowed (for select elements)"
+              },
+              "size": {
+                "type": ["integer", "null"],
+                "minimum": 1,
+                "description": "Number of visible options in a select element"
+              },
+              "rows": {
+                "type": "integer",
+                "minimum": 1,
+                "description": "Number of rows for textarea"
+              },
+              "cols": {
+                "type": "integer",
+                "minimum": 1,
+                "description": "Number of columns for textarea"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": { "type": { "const": "input" } }
+                },
+                "then": {
+                  "required": ["input_type"]
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "type": {
+                      "enum": ["select", "radio_group", "checkbox_group", "datalist"]
+                    }
+                  }
+                },
+                "then": {
+                  "required": ["options"]
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}
