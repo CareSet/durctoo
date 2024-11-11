@@ -19,8 +19,8 @@
             },
             "method": {
               "type": "string",
-              "enum": ["GET", "POST"],
-              "description": "HTTP method for form submission"
+              "enum": ["GET", "POST", "get", "post"],
+              "description": "HTTP method for form submission (case-insensitive, but uppercase is preferred)"
             },
             "action": {
               "type": "string",
