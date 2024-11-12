@@ -202,7 +202,8 @@ class HTML5FormData:
                     options=element['options'],
                     required=element.get('required', False),
                     multiple=element.get('multiple', False),
-                    size=element.get('size')
+                    size=element.get('size'),
+                    label=element.get('label', '')
                 )
             
             elif element_type == 'datalist':
@@ -307,7 +308,7 @@ class HTML5FormData:
 
     def add_select(self, name: str, options: List[Dict[str, str]], 
                   required: bool = False, multiple: bool = False,
-                  size: Optional[int] = None) -> None:
+                  size: Optional[int] = None, label: str = "") -> None:
         """Add a select element to the form.
         
         Args:
@@ -316,6 +317,7 @@ class HTML5FormData:
             required: Whether a selection is required
             multiple: Whether multiple options can be selected
             size: Number of visible options
+            label: Label text for the select element
         """
         self.form_elements.append({
             "type": "select",
@@ -323,7 +325,8 @@ class HTML5FormData:
             "required": required,
             "multiple": multiple,
             "size": size,
-            "options": options
+            "options": options,
+            "label": label
         })
 
     def add_datalist(self, name: str, options: List[str], 

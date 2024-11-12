@@ -12,8 +12,8 @@ class AbstractFormTemplate(ABC):
     possible to have form templates that don't require additional CSS or JavaScript.
     """
     
-    @staticmethod
-    def buildForm(form_data: HTML5FormData) -> Tuple[str, str, str]:
+    @classmethod
+    def buildForm(cls, form_data: HTML5FormData) -> Tuple[str, str, str]:
         """Build complete form including CSS, HTML, and JavaScript.
         
         Args:
@@ -22,13 +22,13 @@ class AbstractFormTemplate(ABC):
         Returns:
             Tuple of (CSS, HTML, JavaScript) strings
         """
-        css = AbstractFormTemplate.buildCSS(form_data)
-        js = AbstractFormTemplate.buildJS(form_data)
-        html = AbstractFormTemplate.buildHTML(form_data)
+        css = cls.buildCSS(form_data)
+        js = cls.buildJS(form_data)
+        html = cls.buildHTML(form_data)
         return (css, html, js)
     
-    @staticmethod
-    def buildCSS(form_data: HTML5FormData) -> str:
+    @classmethod
+    def buildCSS(cls, form_data: HTML5FormData) -> str:
         """Build CSS for form. Default implementation returns empty string.
         
         Args:
@@ -39,8 +39,8 @@ class AbstractFormTemplate(ABC):
         """
         return ""
     
-    @staticmethod
-    def buildJS(form_data: HTML5FormData) -> str:
+    @classmethod
+    def buildJS(cls, form_data: HTML5FormData) -> str:
         """Build JavaScript for form. Default implementation returns empty string.
         
         Args:
@@ -51,9 +51,9 @@ class AbstractFormTemplate(ABC):
         """
         return ""
     
-    @staticmethod
+    @classmethod
     @abstractmethod
-    def buildHTML(form_data: HTML5FormData) -> str:
+    def buildHTML(cls, form_data: HTML5FormData) -> str:
         """Build HTML for form. Must be implemented by child classes.
         
         Args:
