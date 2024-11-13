@@ -1,31 +1,49 @@
 import json
 from src.durctoo.forms import FormGenerator
-from src.durctoo.templates import MaterializeTemplate
+from src.durctoo.templates import MaterializeFormTemplate
 
 example_form_json = {
-    "title": "Example Materialize Form",
-    "action": "/submit",
-    "method": "POST",
-    "fields": [
-        {
-            "type": "text",
-            "name": "name",
-            "label": "Name"
+    "form": {
+        "form_header": {
+            "form_id": "example_form",
+            "method": "POST",
+            "action": "/submit",
+            "enctype": ""
         },
-        {
-            "type": "select",
-            "name": "color",
-            "label": "Favorite Color",
-            "options": [
-                "Red",
-                "Green",
-                "Blue"
-            ]
-        }
-    ]
+        "form_element_list": [
+            {
+                "type": "input",
+                "input_type": "text",
+                "name": "name",
+                "label": "Name",
+                "required": True,
+                "placeholder": "Enter your name"
+            },
+            {
+                "type": "select",
+                "name": "color",
+                "label": "Favorite Color",
+                "required": True,
+                "options": [
+                    {
+                        "value": "red",
+                        "label": "Red"
+                    },
+                    {
+                        "value": "green",
+                        "label": "Green"
+                    },
+                    {
+                        "value": "blue",
+                        "label": "Blue"
+                    }
+                ]
+            }
+        ]
+    }
 }
 
-form_generator = FormGenerator(example_form_json, MaterializeTemplate)
+form_generator = FormGenerator(example_form_json, MaterializeFormTemplate)
 generated_form = form_generator.generate_form()
 
 print("Generated Materialize Form:")

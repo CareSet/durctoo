@@ -7,23 +7,23 @@ from ..forms import HTML5FormData
 class Bootstrap5FormTemplate(AbstractFormTemplate):
     """Form template that generates Bootstrap 5.3.3 styled forms."""
     
-    @staticmethod
-    def buildCSS(form_data: HTML5FormData) -> str:
+    @classmethod
+    def buildCSS(cls, form_data: HTML5FormData) -> str:
         """Include Bootstrap 5.3.3 CSS from CDN."""
         return """<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
                  rel="stylesheet" 
                  integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
                  crossorigin="anonymous">"""
     
-    @staticmethod
-    def buildJS(form_data: HTML5FormData) -> str:
+    @classmethod
+    def buildJS(cls, form_data: HTML5FormData) -> str:
         """Include Bootstrap 5.3.3 JavaScript from CDN."""
         return """<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
                 integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
                 crossorigin="anonymous"></script>"""
     
-    @staticmethod
-    def buildHTML(form_data: HTML5FormData) -> str:
+    @classmethod
+    def buildHTML(cls, form_data: HTML5FormData) -> str:
         """Build Bootstrap 5.3.3 styled HTML form."""
         form_dict = form_data.to_dict()["form"]
         form_header = form_dict["form_header"]
@@ -36,11 +36,11 @@ class Bootstrap5FormTemplate(AbstractFormTemplate):
             html += f'action="{form_header["action"]}" '
         if form_header["enctype"]:
             html += f'enctype="{form_header["enctype"]}" '
-        html += 'class="needs-validation" novalidate>\n'
+        html += '>\n'
         
         # Add form elements
         for element in elements:
-            html += Bootstrap5FormTemplate._build_element(element)
+            html += cls._build_element(element)
         
         # Add submit button
         html += """  <div class="mb-3">
@@ -51,28 +51,28 @@ class Bootstrap5FormTemplate(AbstractFormTemplate):
         html += "</form>"
         return html
     
-    @staticmethod
-    def _build_element(element: Dict[str, Any]) -> str:
+    @classmethod
+    def _build_element(cls, element: Dict[str, Any]) -> str:
         """Build HTML for a single form element."""
         element_type = element["type"]
         
         if element_type == "input":
-            return Bootstrap5FormTemplate._build_input_element(element)
+            return cls._build_input_element(element)
         elif element_type == "textarea":
-            return Bootstrap5FormTemplate._build_textarea_element(element)
+            return cls._build_textarea_element(element)
         elif element_type == "checkbox_group":
-            return Bootstrap5FormTemplate._build_checkbox_group(element)
+            return cls._build_checkbox_group(element)
         elif element_type == "radio_group":
-            return Bootstrap5FormTemplate._build_radio_group(element)
+            return cls._build_radio_group(element)
         elif element_type == "select":
-            return Bootstrap5FormTemplate._build_select_element(element)
+            return cls._build_select_element(element)
         elif element_type == "datalist":
-            return Bootstrap5FormTemplate._build_datalist_element(element)
+            return cls._build_datalist_element(element)
         
         return "<!-- Unsupported element type -->\n"
     
-    @staticmethod
-    def _build_input_element(element: Dict[str, Any]) -> str:
+    @classmethod
+    def _build_input_element(cls, element: Dict[str, Any]) -> str:
         """Build HTML for input elements."""
         input_type = element["input_type"]
         required = 'required' if element.get("required", False) else ''
@@ -113,8 +113,8 @@ class Bootstrap5FormTemplate(AbstractFormTemplate):
         
         return html
     
-    @staticmethod
-    def _build_textarea_element(element: Dict[str, Any]) -> str:
+    @classmethod
+    def _build_textarea_element(cls, element: Dict[str, Any]) -> str:
         """Build HTML for textarea elements."""
         required = 'required' if element.get("required", False) else ''
         name = element["name"]
@@ -137,8 +137,8 @@ class Bootstrap5FormTemplate(AbstractFormTemplate):
         
         return html
     
-    @staticmethod
-    def _build_checkbox_group(element: Dict[str, Any]) -> str:
+    @classmethod
+    def _build_checkbox_group(cls, element: Dict[str, Any]) -> str:
         """Build HTML for checkbox groups."""
         name = element["name"]
         options = element["options"]
@@ -160,8 +160,8 @@ class Bootstrap5FormTemplate(AbstractFormTemplate):
         
         return html
     
-    @staticmethod
-    def _build_radio_group(element: Dict[str, Any]) -> str:
+    @classmethod
+    def _build_radio_group(cls, element: Dict[str, Any]) -> str:
         """Build HTML for radio groups."""
         name = element["name"]
         options = element["options"]
@@ -185,8 +185,8 @@ class Bootstrap5FormTemplate(AbstractFormTemplate):
         
         return html
     
-    @staticmethod
-    def _build_select_element(element: Dict[str, Any]) -> str:
+    @classmethod
+    def _build_select_element(cls, element: Dict[str, Any]) -> str:
         """Build HTML for select elements."""
         name = element["name"]
         options = element["options"]
@@ -209,8 +209,8 @@ class Bootstrap5FormTemplate(AbstractFormTemplate):
         
         return html
     
-    @staticmethod
-    def _build_datalist_element(element: Dict[str, Any]) -> str:
+    @classmethod
+    def _build_datalist_element(cls, element: Dict[str, Any]) -> str:
         """Build HTML for datalist elements."""
         name = element["name"]
         options = element["options"]

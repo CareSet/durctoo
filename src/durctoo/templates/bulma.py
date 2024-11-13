@@ -35,7 +35,7 @@ class BulmaFormTemplate(AbstractFormTemplate):
 
     @classmethod
     def buildJS(cls, form_data: HTML5FormData) -> str:
-        """Add JavaScript for form functionality."""
+        """Add minimal JavaScript only for file input UI."""
         return """
         <script>
             document.addEventListener('DOMContentLoaded', () => {
@@ -47,42 +47,6 @@ class BulmaFormTemplate(AbstractFormTemplate):
                         const fileName = fileInput.files[0]?.name || 'No file chosen';
                         fileNameSpan.textContent = fileName;
                     });
-                });
-
-                // Form validation
-                const form = document.querySelector('form');
-                form.addEventListener('submit', (event) => {
-                    const requiredFields = form.querySelectorAll('[required]');
-                    let hasError = false;
-                    
-                    requiredFields.forEach(field => {
-                        const control = field.closest('.control');
-                        if (!field.value) {
-                            field.classList.add('is-danger');
-                            if (control) {
-                                const helpText = control.querySelector('.help');
-                                if (!helpText) {
-                                    const help = document.createElement('p');
-                                    help.className = 'help is-danger';
-                                    help.textContent = 'This field is required';
-                                    control.appendChild(help);
-                                }
-                            }
-                            hasError = true;
-                        } else {
-                            field.classList.remove('is-danger');
-                            if (control) {
-                                const helpText = control.querySelector('.help');
-                                if (helpText) {
-                                    helpText.remove();
-                                }
-                            }
-                        }
-                    });
-                    
-                    if (hasError) {
-                        event.preventDefault();
-                    }
                 });
             });
         </script>
@@ -305,7 +269,7 @@ class BulmaFormTemplate(AbstractFormTemplate):
         """
         
         return f"""
-        <form id="{form_id}" method="{method}" action="{action}" {enctype} novalidate>
+        <form id="{form_id}" method="{method}" action="{action}" {enctype}>
             {''.join(elements_html)}
             {submit_button}
         </form>

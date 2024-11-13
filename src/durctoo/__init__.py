@@ -1,18 +1,20 @@
 """
-Durctoo - HTML5 Form Data Modeling Package
-
-A Python package that provides clean abstractions for modeling HTML5 form data,
-independent of any specific web framework or rendering engine.
+durctoo - HTML5 Form Generator Library
 """
-from .forms import HTML5FormData, FormMethod, InputType
-from .templates import AbstractFormTemplate, Bootstrap5FormTemplate
-from .version import __version__
+
+__version__ = '0.1.0'
+
+from .form_data import HTML5FormData, FormMethod, InputType
+from .forms import FormGenerator
+from .templates import AbstractFormTemplate, Bootstrap5FormTemplate, BulmaFormTemplate, MaterializeFormTemplate
 
 __all__ = [
     'HTML5FormData',
     'FormMethod',
     'InputType',
+    'FormGenerator',
     'AbstractFormTemplate',
     'Bootstrap5FormTemplate',
-    '__version__'
+    'BulmaFormTemplate',
+    'MaterializeFormTemplate',
 ]

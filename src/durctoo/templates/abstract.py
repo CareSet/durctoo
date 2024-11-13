@@ -2,7 +2,7 @@
 
 from abc import ABC, abstractmethod
 from typing import Tuple
-from ..forms import HTML5FormData
+from ..form_data import HTML5FormData
 
 class AbstractFormTemplate(ABC):
     """Abstract base class for form templates that generate HTML5 forms.
